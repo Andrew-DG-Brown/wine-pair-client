@@ -1,0 +1,4 @@
+.bg-img {
+    background: no-repeat url('/assets/images/login-background.jpg');
+background-clip: content-box;
+}

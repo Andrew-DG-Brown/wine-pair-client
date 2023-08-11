@@ -1,0 +1,1 @@
+export interface UserData { email: string; password: string; uId?: number | string };

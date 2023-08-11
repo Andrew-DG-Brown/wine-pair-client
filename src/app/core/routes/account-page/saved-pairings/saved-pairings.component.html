@@ -1,0 +1,55 @@
+<section class="container mx-auto my-10">
+    <div class="my-10">
+        <div
+            class="flex flex-col items-center justify-between p-4 border border-gray-200 rounded-lg shadow-sm bg-gray-50 dark:bg-gray-800 dark:border-gray-700 sm:flex-row">
+            <div class="flex-shrink-0 w-full sm:w-auto sm:flex">
+                <div class="relative flex-shrink-0 w-full mb-4 sm:mb-0 sm:mr-4 sm:w-64 lg:w-96">
+                    <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                            stroke="currentColor" aria-hidden="true" class="w-5 h-5 text-gray-500 dark:text-gray-400">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                        </svg>
+                    </div><label for="search" class="hidden">Search saved pairings:</label>
+                    <input id="search" type="text"
+                    [(ngModel)]="filterValue"
+                    (ngModelChange)="filterSearch()"
+                        class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 py-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        placeholder="Search saved pairings" value="">
+                </div>
+                <label for="wine-filter" class="hidden">Select wines:</label>
+                <select id="wine-filter" (change)="filterWine()" 
+                [(ngModel)]="filterByWineValue"
+                    class="bg-white border border-gray-300 text-gray-900 sm:w-40 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 py-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    <option value="All">All wines</option>
+                    <ng-container *ngIf="filterByWineDropdownValues">
+                        <option *ngFor="let wine of filterByWineDropdownValues" [ngValue]="wine">{{wine}}</option>
+                    </ng-container>     
+                </select>
+            </div>
+            <div *ngIf="(savedPairings$ | async) as saveData" class="text-sm mt-5 sm:mt-0 text-gray-600 dark:text-gray-400 sm:block">
+                Showing {{saveData.length}} pairing{{saveData.length > 1 ? 's' : ''}}.
+            </div>
+        </div>
+    </div>
+    <!-- No saved or empty search -->
+    <ng-container *ngIf="(savedPairings$ | async) as saveData">
+        <div *ngIf="saveData.length > 0" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <ng-container *ngFor="let card of saveData">
+                <app-wine-card [cardType]="card.type" [wineData]="card" [dish]="card.dish"
+                (emitDelete)="updateAfterDelete($event)"
+                ></app-wine-card>
+            </ng-container>
+        </div>
+        <div *ngIf="saveData.length === 0" class="flex flex-col justify-center item-center mt-20">
+            <h3 class="text-2xl mb-10 text-center">
+                {{filterValue.length === 0 ? 'You have no saved pairings' : 'No pairings found'}}
+            </h3>
+            <app-button *ngIf="filterValue.length === 0" class="text-center" content="Start pairing" type="arrow" routerLink="/"></app-button>
+        </div>
+    </ng-container>
+</section>
+
+<!-- Loading spinner  -->
+
+<app-spinner *ngIf="!(savedPairings$ | async)"></app-spinner>

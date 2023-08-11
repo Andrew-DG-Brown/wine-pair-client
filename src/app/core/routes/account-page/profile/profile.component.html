@@ -1,0 +1,130 @@
+<section class="">
+    <div class="md:px-32 px-5 my-10 mx-auto xl:mx-52 max-w-8xl">
+        <div class="mb-8">
+            <h1 class="inline-block text-3xl font-extrabold tracking-tight text-gray-900 dark:text-white">Account
+                settings</h1>
+            <p class="mt-1 text-lg text-gray-500 dark:text-gray-400">View and update details for your account.</p>
+        </div>
+        <div class="">
+            <div *ngIf="form">
+                <form [formGroup]="form" (ngSubmit)="submit()" #ngForm="ngForm"
+                    class="p-4 bg-white rounded-lg border border-gray-200 sm:p-6 xl:p-8 dark:bg-gray-800 dark:border-gray-700">
+                    <h2 class="mb-4 text-xl font-bold dark:text-white">General information</h2>
+                    <div class="grid grid-cols-6 gap-6">
+                        <div class="col-span-6 sm:col-span-3">
+                            <!-- invalid username label -->
+                            <label *ngIf="form.get('username').hasError('required') && form.get('username').dirty; else username" for="email" class="block mb-2 text-sm font-medium text-primary-500 dark:text-primary-500">
+                                Username required</label>
+                                <ng-template #username>
+                                    <label
+                                        for="username"
+                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Username</label>
+                                </ng-template>
+                                
+                                <input formControlName="username" type="text" name="username" id="username"
+                                class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                [value]="''"></div>
+                        <!-- <div class="col-span-6 sm:col-span-3"><label for="last-name"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Last
+                                Name</label><input required="" type="text" name="last-name" id="last-name"
+                                placeholder="Green"
+                                class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                value="Brown"></div> -->
+                        <div  class="col-span-6 sm:col-span-3">
+                            <!-- invalid email label -->
+                            <label *ngIf="form.get('email').hasError('email') || (form.get('email').hasError('required') && form.get('email').dirty)" for="email" class="block mb-2 text-sm font-medium text-primary-500 dark:text-primary-500">
+                            {{form.get('email').hasError('email') ? 'Not a valid email' : 'Email required'}}</label>
+                            <!-- ASYNC invalid email -->
+                            <label *ngIf="form.get('email').hasError('emailAlreadyExists') else default" for="email" class="block mb-2 text-sm font-medium text-primary-500 dark:text-primary-500">
+                            Email already registered</label>
+                            <!-- regular email label -->
+                            
+                            <ng-template #default>
+                                <label *ngIf="(!form.get('email').dirty || form.get('email').valid)" for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
+                            </ng-template>
+                                <input *ngIf="(userState$ | async) as user"
+                                formControlName="email"
+                                type="email" name="email" id="email" 
+                                [class]="(form.controls['email']?.dirty || ngForm.submitted) && !form.controls['email']?.valid ? 'border-primary-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' : 'bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'"
+                                [value]="user.email"></div>
+                        
+                        <!-- <div class="col-span-6 sm:col-span-3"><label for="organization"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Organization</label><input
+                                type="text" name="organization" id="organization" placeholder="Facebook, Google"
+                                class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                value=""></div>
+                        <div class="col-span-6 sm:col-span-3"><label for="role"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Role</label><input
+                                type="text" name="role" id="role" placeholder="React Developer"
+                                class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                value=""></div> -->
+                        <div class="col-span-6 sm:col-full">
+                            <button
+                                class="text-white font-medium rounded-lg text-base px-5 py-3 w-full sm:w-auto text-center disabled:bg-primary-400 bg-primary-700"
+                                type="submit"><span class="flex justify-center items-center">Update
+                                    account</span></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <!-- <div>
+                <form
+                    class="p-4 bg-white rounded-lg border border-gray-200 sm:p-6 xl:p-8 dark:bg-gray-800 dark:border-gray-700">
+                    <h2 class="mb-4 text-xl font-bold dark:text-white">Update password</h2>
+                    <div class="col-span-6 mb-6 sm:col-span-3"><label for="current-password"
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Current
+                            password</label><input required="" type="password" name="current-password"
+                            id="current-password" placeholder=""
+                            class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            value=""></div>
+                    <div class="col-span-6 mb-6 sm:col-span-3"><label for="new-password"
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">New
+                            password</label><input required="" type="password" name="new-password" id="new-password"
+                            placeholder=""
+                            class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            value=""></div>
+                    <div class="col-span-6 mb-6 sm:col-span-3"><label for="confirm-password"
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Confirm
+                            password</label><input required="" type="password" name="confirm-password"
+                            id="confirm-password" placeholder=""
+                            class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            value=""></div>
+                    <div class="col-span-6 sm:col-full"><button
+                            class="text-white font-medium rounded-lg text-base px-5 py-3 w-full sm:w-auto text-center bg-blue-700"
+                            type="submit"><span class="flex justify-center items-center">Update password</span></button>
+                    </div>
+                </form>
+            </div> -->
+            <!-- <div>
+                <div
+                    class="p-4 bg-white rounded-lg border border-gray-200 sm:p-6 xl:p-8 dark:bg-gray-800 dark:border-gray-700">
+                    <h2 class="text-xl font-bold dark:text-white">Email notifications</h2>
+                    <p class="text-sm font-normal text-gray-500 dark:text-gray-400"></p>
+                    <div class="divide-y divide-gray-200 dark:divide-gray-700">
+                        <div class="flex justify-between items-center py-4">
+                            <div class="flex flex-col flex-grow">
+                                <div class="text-lg font-semibold text-gray-900 dark:text-white">Weekly newsletter</div>
+                                <div class="text-base font-normal text-gray-500 dark:text-gray-400">Get the latest news
+                                    for Flowbite and Tailwind CSS</div>
+                            </div><label for="company-news" class="flex relative items-center cursor-pointer"><input
+                                    type="checkbox" id="company-news" class="sr-only"><span
+                                    class="w-11 h-6 bg-gray-200 rounded-full border border-gray-200 toggle-bg dark:bg-gray-700 dark:border-gray-600"></span></label>
+                        </div>
+                        <div class="flex justify-between items-center py-4">
+                            <div class="flex flex-col flex-grow">
+                                <div class="text-lg font-semibold text-gray-900 dark:text-white">Product updates</div>
+                                <div class="text-base font-normal text-gray-500 dark:text-gray-400">Get notified when a
+                                    product has been updated</div>
+                            </div><label for="account-activity" class="flex relative items-center cursor-pointer"><input
+                                    type="checkbox" id="account-activity" class="sr-only"><span
+                                    class="w-11 h-6 bg-gray-200 rounded-full border border-gray-200 toggle-bg dark:bg-gray-700 dark:border-gray-600"></span></label>
+                        </div>
+                    </div>
+                    <div class="mt-4"><button
+                            class="text-white font-medium rounded-lg text-base px-5 py-3 w-full sm:w-auto text-center bg-blue-700"><span
+                                class="flex justify-center items-center">Update preferences</span></button></div>
+                </div>
+            </div> -->
+        </div>
+    </div>
+</section>

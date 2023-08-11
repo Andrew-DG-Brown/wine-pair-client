@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Observable } from 'rxjs';
+import { SnackbarService } from './shared/services/snackbar.service';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +8,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'wine-pair';
+  snackbar$: Observable<any>
+
+  constructor(private snackbar: SnackbarService) {
+    this.snackbar$ = this.snackbar.getCurrentSnackbar()
+  }
 }

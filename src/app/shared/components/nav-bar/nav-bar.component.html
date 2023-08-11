@@ -1,0 +1,68 @@
+
+<nav class="bg-white pl-4 pr-2 sm:px-4 py-2.5 rounded dark:bg-gray-900 border-b border-gray-200 dark:border-gray-600">
+    <div class="container flex flex-wrap items-center justify-between mx-auto">
+      <a routerLink="/" class="flex items-center w-36 h-14">
+          <!-- <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">Wine Pair</span> -->
+          <svg xmlns="http://www.w3.org/2000/svg" width="550" height="157" viewBox="0 0 550 157" fill="none">
+            <path d="M36.096 113L14.112 45.8H30.24L49.344 105.32H41.28L61.248 45.8H75.648L94.848 105.32H87.072L106.656 45.8H121.536L99.552 113H82.848L65.856 60.776H70.272L52.8 113H36.096ZM130.218 113V45.8H145.77V113H130.218ZM161.718 113V45.8H174.582L214.23 94.184H207.99V45.8H223.35V113H210.582L170.838 64.616H177.078V113H161.718ZM253.553 72.872H285.905V84.968H253.553V72.872ZM254.705 100.52H291.281V113H239.249V45.8H290.033V58.28H254.705V100.52Z" fill="#9F1239"/>
+            <path d="M303.656 113V45.8H332.744C338.76 45.8 343.944 46.792 348.296 48.776C352.648 50.696 356.008 53.48 358.376 57.128C360.744 60.776 361.928 65.128 361.928 70.184C361.928 75.176 360.744 79.496 358.376 83.144C356.008 86.792 352.648 89.608 348.296 91.592C343.944 93.512 338.76 94.472 332.744 94.472H312.296L319.208 87.464V113H303.656ZM319.208 89.192L312.296 81.8H331.88C336.68 81.8 340.264 80.776 342.632 78.728C345 76.68 346.184 73.832 346.184 70.184C346.184 66.472 345 63.592 342.632 61.544C340.264 59.496 336.68 58.472 331.88 58.472H312.296L319.208 51.08V89.192ZM360.823 113L390.776 45.8H406.136L436.184 113H419.864L395.288 53.672H401.432L376.76 113H360.823ZM375.799 98.6L379.928 86.792H414.488L418.712 98.6H375.799ZM443.156 113V45.8H458.708V113H443.156ZM474.656 113V45.8H503.744C509.76 45.8 514.944 46.792 519.296 48.776C523.648 50.696 527.008 53.48 529.376 57.128C531.744 60.776 532.928 65.128 532.928 70.184C532.928 75.176 531.744 79.496 529.376 83.144C527.008 86.728 523.648 89.48 519.296 91.4C514.944 93.32 509.76 94.28 503.744 94.28H483.296L490.208 87.464V113H474.656ZM517.375 113L500.576 88.616H517.184L534.176 113H517.375ZM490.208 89.192L483.296 81.896H502.88C507.68 81.896 511.264 80.872 513.632 78.824C516 76.712 517.184 73.832 517.184 70.184C517.184 66.472 516 63.592 513.632 61.544C511.264 59.496 507.68 58.472 502.88 58.472H483.296L490.208 51.08V89.192Z" fill="black"/>
+            </svg>
+      </a>
+      <ng-container *ngIf="!(loggedIn$ | async); else profileDropdown">
+        <button (click)="toggleDropdown()" data-collapse-toggle="navbar-default" type="button" class="inline-flex items-center p-2 ml-3 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-default" aria-expanded="false">
+          <span class="sr-only">Open main menu</span>
+          <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path></svg>
+        </button>
+        <div *ngIf="(dropdownClosed$ | async) && !(loggedIn$ | async)" class="w-32 md:static absolute top-10 right-5 px-3 z-20 md:block md:w-auto" id="navbar-default">
+          <ul class="flex flex-col p-4 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+            <!-- Button links -->
+            <li *ngFor="let button of navConfig.loggedOut">
+              <a [routerLink]="button.link ? button.link : null" 
+              class="block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-primary-100 md:hover:bg-transparent md:border-0 hover:text-primary-700 md:p-0 focus:bg-primary-700 md:focus:bg-white focus:text-white dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent md:focus:text-primary-700" aria-current="page">{{button.route}}</a>
+            </li>
+            <!-- <li>
+              <a href="" class="block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-primary-100 md:hover:bg-transparent md:border-0 hover:text-primary-700 md:p-0 focus:bg-primary-700 md:focus:bg-white focus:text-white dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent md:focus:text-primary-700">Login</a>
+            </li> -->
+          </ul>
+        </div>
+      </ng-container>
+
+      <ng-template #profileDropdown>
+        <div class="flex items-center md:order-2">
+          <button (click)="toggleDropdown()" type="button" class="flex mr-3 text-sm  rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
+            <span class="sr-only">Open user menu</span>
+            <!-- Profile photo-->
+            <div class="relative w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
+              <svg class="absolute w-12 h-12 text-gray-400 -left-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path></svg>
+            </div>
+          </button>
+          <!-- Dropdown menu -->
+          <div *ngIf="(dropdownClosed$ | async)" class="absolute top-12 right-5 z-50 my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600" id="user-dropdown">
+            <div *ngIf="(userState$ | async) as data" class="px-4 py-3">
+              <span *ngIf="data.username" class="block text-sm text-gray-900 dark:text-white">{{ data.username }}</span>
+              <span class="block text-sm font-medium text-gray-500 truncate dark:text-gray-400">{{data.email}}</span>
+            </div>
+            <ul class="py-2" aria-labelledby="user-menu-button">
+              <li *ngFor="let button of navConfig.loggedIn">
+                <a [routerLink]="button.link ? button.link : null" 
+                (click)="!button.link && logOut()"
+                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">{{button.route}}</a>
+              </li>
+              <!-- <li>
+                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Settings</a>
+              </li>
+              <li>
+                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Earnings</a>
+              </li>
+              <li>
+                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign out</a>
+              </li> -->
+            </ul>
+          </div>
+      </div>
+      </ng-template>
+      
+      
+    </div>
+  </nav>
+  

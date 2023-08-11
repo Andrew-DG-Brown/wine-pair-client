@@ -1,0 +1,72 @@
+<div *ngIf="(data$ | async) as data" class="flex flex-col justify-center w-full px-6 py-10" id="search-results">
+
+    <!-- ==== Wine - Complex ==== -->
+    <ng-container class="flex flex-col justify-center" *ngIf="data.type === 'complex'">
+        <div class="xl:mx-60 lg:mx-52">
+            <!-- Top heading -->
+            <h2 class="mb-5 text-4xl font-semibold leading-normal text-gray-900 dark:text-white"> Wines to go with <span class="text-primary-700">{{ data.dish }}</span>
+            </h2>
+                <p class=" mb-10 text-left text-black font-normal dark:text-gray-400"> {{ data.pairing_text }} </p>
+        </div>
+        <!-- Cards -->
+        <div *ngIf="data" class="md:px-24 lg:px-40 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+            <app-wine-card *ngFor="let wine of data.paired_wines" [dish]="data.dish" cardType="complex" [wineData]="wine"></app-wine-card>
+        </div>
+        <!-- Paired product -->
+        <ng-container *ngIf="data.product_matches && data.product_matches.length > 0">
+            <h3 class="mb-5 mx-auto  max-w-lg text-center text-3xl font-semibold leading-normal text-gray-900 dark:text-white"> Recommended wine</h3>
+            <div *ngFor="let wine of data.product_matches" class="w-full mx-auto max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                <!-- <a href="#">
+                    <img class="p-8 rounded-t-lg m-auto" [src]="wine.imageUrl" alt="product image" />
+                </a> -->
+                <div class="px-5 py-5">
+                    <a href="#">
+                        <h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">{{ wine.title }}</h5>
+                    </a>
+                    <p class="my-3 font-normal text-gray-700 dark:text-gray-400">{{ wine.description }}</p>
+                    <div class="flex items-center mt-2.5 mb-5">
+                        <span class="bg-emerald-100 text-emerald-800 text-xs font-semibold px-2.5 py-0.5 rounded dark:bg-emerald-200 dark:text-emerald-800 tracking-normal">{{wine.averageRating}} / 100</span>
+                        <span class="w-1 h-1 mx-2 bg-gray-500 rounded-full dark:bg-gray-500"></span>
+                        <p class="text-sm font-medium text-gray-500 dark:text-gray-400">{{wine.ratingCount}} reviews</p>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-3xl font-bold text-gray-900 dark:text-white">{{ wine.price }}</span>
+                        <app-button [link]="wine.link" type="primary" content="Buy now"></app-button>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+    </ng-container>
+
+    <!-- ==== Wine - Simple ==== -->
+
+    <ng-container *ngIf="data.type === 'simple'">
+        <!-- Top heading -->
+        <h3 class="mb-5 mx-auto max-w-lg text-center text-3xl font-semibold leading-normal text-gray-900 dark:text-white"> Wines to go with {{ data.dish }} </h3>
+        <!-- Cards -->
+        <div *ngIf="data" class="md:px-24 lg:px-40 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+            <app-wine-card *ngFor="let wine of data.pairedWines" [wineData]="wine" cardType="simple" [dish]="data.dish"></app-wine-card>
+        </div>
+    </ng-container>
+</div>
+<!-- Error -->
+
+<ng-container *ngIf="!(isLoading$ | async)" >
+    <div *ngIf="(data$ | async) as data" class="px-3 pb-10">
+        <div *ngIf="isError(data)" class="flex p-4 mb-4 mx-10 lg:mx-32 text-sm text-primary-800 rounded-lg bg-primary-50 dark:bg-gray-800 dark:text-primary-400" role="alert">
+            <svg aria-hidden="true" class="flex-shrink-0 inline w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
+            <span class="sr-only">Info</span>
+            <div>
+              <span class="font-medium">Error:</span> {{ data.error }}
+            </div>
+          </div>
+    </div>
+</ng-container>
+
+
+<!-- Loading spinner  -->
+<div *ngIf="(isLoading$ | async)" class="mt-60 h-[800px]">
+    <app-spinner ></app-spinner>
+    <p class="text-center text-gray-600 text-lg ml-4 mt-10">Finding the perfect pairing</p>
+</div>
+

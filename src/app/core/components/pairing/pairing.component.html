@@ -1,0 +1,12 @@
+<ng-container *ngIf="(initialLoading$ | async)">
+    <app-pairing-search (search)="getPair($event)"></app-pairing-search>
+    <div id="search-results">
+        <div *ngIf="{pairing: pairing$ | async} as data" class="pt-2 ">
+            <app-query-result ></app-query-result>
+        </div>
+    </div>
+</ng-container>
+<!-- Spinner -->
+<ng-container *ngIf="!(initialLoading$ | async)">
+    <app-spinner class="absolute top-52"></app-spinner>
+</ng-container>

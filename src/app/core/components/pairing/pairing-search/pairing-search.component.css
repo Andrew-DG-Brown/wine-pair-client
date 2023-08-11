@@ -1,0 +1,5 @@
+.bg-img {
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.4)), url('/assets/images/query-search-bg.jpg');
+    background-size: cover;
+    background-position: center;
+}

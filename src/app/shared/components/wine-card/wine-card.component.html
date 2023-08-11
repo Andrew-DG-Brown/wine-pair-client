@@ -1,0 +1,66 @@
+<ng-container *ngIf="wineData && cardType === 'complex'">
+    <article class="h-[610px] mt-4">
+        <div class="mx-auto relative max-w-sm bg-white border mb-10 border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 min-h-[570px]">
+            <!-- Like button  -->
+            <div *ngIf="!savedPairing" (click)="liked(wineData, dish)" class="w-7 absolute top-4 right-4 bg-primary-700 hover:bg-primary-800 p-[0.3rem] cursor-pointer rounded-full">
+                <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 512 512"><title>Heart</title><path d="M352.92 80C288 80 256 144 256 144s-32-64-96.92-64c-52.76 0-94.54 44.14-95.08 96.81-1.1 109.33 86.73 187.08 183 252.42a16 16 0 0018 0c96.26-65.34 184.09-143.09 183-252.42-.54-52.67-42.32-96.81-95.08-96.81z" fill="none" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="36"/></svg>
+            </div>
+             <!-- Delete button  -->
+             <div *ngIf="savedPairing" (click)="deletePairing(wineData.wine_name, dish)" class="w-9 absolute top-4 right-4 bg-white hover:bg-gray-100 p-[0.5rem] cursor-pointer rounded-full border border-gray-100">
+                <svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512"><title>Trash</title><path d="M112 112l20 320c.95 18.49 14.4 32 32 32h184c17.67 0 30.87-13.51 32-32l20-320" fill="none" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"/><path stroke="black" stroke-linecap="round" stroke-miterlimit="10" stroke-width="32" d="M80 112h352"/><path d="M192 112V72h0a23.93 23.93 0 0124-24h80a23.93 23.93 0 0124 24h0v40M256 176v224M184 176l8 224M328 176l-8 224" fill="none" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="36"/></svg>
+                <!-- <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 512 512"><title>Heart</title><path d="M352.92 80C288 80 256 144 256 144s-32-64-96.92-64c-52.76 0-94.54 44.14-95.08 96.81-1.1 109.33 86.73 187.08 183 252.42a16 16 0 0018 0c96.26-65.34 184.09-143.09 183-252.42-.54-52.67-42.32-96.81-95.08-96.81z" fill="none" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="36"/></svg> -->
+            </div>
+            <div>
+                <img class="rounded-t-lg" [src]="$any(wineData).image_url" alt="" />
+                <!-- <img crossorigin="anonymous" class="rounded-t-lg" [src]="wineData.image_url" [alt]="wineData.wine_name" /> -->
+            </div>
+            <div class="p-5">
+                <a [href]="wineData.link || ''" target="_blank">
+                    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ $any(wineData).wine_name }}</h5>
+                    <ng-container *ngIf="savedPairing">
+                        <p class="inline-block tracking-tight text-gray-500 dark:text-white">Paired with:</p>
+                        <h3 class="inline-block ml-5 mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">{{dish}}</h3>
+                    </ng-container>
+                    
+                </a>
+                <p *ngIf="wineData.description" class="mb-3 font-medium text-gray-700 dark:text-gray-400">{{ wineData.description }}</p>
+                <app-button *ngIf="wineData.link" [link]="wineData.link" type="arrow" content="Learn more"></app-button>
+            </div>
+        </div>
+    </article>
+</ng-container>
+
+<ng-container *ngIf="wineData && (cardType === 'simple' || cardType == null)">
+    <article class="h-[610px] mt-4">
+
+        <div class="mx-auto relative max-w-sm bg-white border mb-10 border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 min-h-[570px]">
+            <!-- Like button  -->
+            <div *ngIf="!savedPairing" (click)="liked(wineData, dish)" class="w-7 absolute top-4 right-4 bg-primary-700 hover:bg-primary-800 p-[0.3rem] cursor-pointer rounded-full">
+                <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 512 512"><title>Heart</title><path d="M352.92 80C288 80 256 144 256 144s-32-64-96.92-64c-52.76 0-94.54 44.14-95.08 96.81-1.1 109.33 86.73 187.08 183 252.42a16 16 0 0018 0c96.26-65.34 184.09-143.09 183-252.42-.54-52.67-42.32-96.81-95.08-96.81z" fill="none" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="36"/></svg>
+            </div>
+            <!-- Delete button  -->
+            <div *ngIf="savedPairing" (click)="deletePairing(wineData.wine_name, dish)" class="w-9 absolute top-4 right-4 bg-white hover:bg-gray-100 p-[0.5rem] cursor-pointer rounded-full border border-gray-100">
+                <svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512"><title>Trash</title><path d="M112 112l20 320c.95 18.49 14.4 32 32 32h184c17.67 0 30.87-13.51 32-32l20-320" fill="none" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"/><path stroke="black" stroke-linecap="round" stroke-miterlimit="10" stroke-width="32" d="M80 112h352"/><path d="M192 112V72h0a23.93 23.93 0 0124-24h80a23.93 23.93 0 0124 24h0v40M256 176v224M184 176l8 224M328 176l-8 224" fill="none" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="36"/></svg>
+                <!-- <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 512 512"><title>Heart</title><path d="M352.92 80C288 80 256 144 256 144s-32-64-96.92-64c-52.76 0-94.54 44.14-95.08 96.81-1.1 109.33 86.73 187.08 183 252.42a16 16 0 0018 0c96.26-65.34 184.09-143.09 183-252.42-.54-52.67-42.32-96.81-95.08-96.81z" fill="none" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="36"/></svg> -->
+            </div>
+            <div>
+                <img class="rounded-t-lg" [src]="$any(wineData).image_url" alt="" />
+                <!-- <img crossorigin="anonymous" class="rounded-t-lg" [src]="'http://localhost:4321/images/Blank_white.jpg'" [alt]="wineData.wine_name" /> -->
+            </div>
+            <div class="flex flex-col p-5">
+                <a [href]="wineData.link || ''" [target]="wineData.link && '_blank'">
+                    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ $any(wineData).wine_name || wineData.name}}</h5>
+                    <ng-container *ngIf="savedPairing">
+                        <p class="inline-block tracking-tight text-gray-500 dark:text-white">Paired with:</p>
+                        <h3 class="inline-block ml-5 mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">{{dish}}</h3>
+                    </ng-container>
+                </a>
+                <p *ngIf="wineData.description || wineData.pairdescription" #description class="mb-3 font-normal text-gray-700 dark:text-gray-400">
+                {{ wineData.pairdescription }}   
+                {{ wineData.description || '' }}
+                </p>
+                <app-button *ngIf="wineData.link" [link]="wineData.link" type="arrow" content="Learn more"></app-button>
+            </div>
+        </div>
+    </article>
+</ng-container>
