@@ -103,11 +103,12 @@ export class GlobalStateService {
       queries = JSON.parse(localStorage.getItem('recentQueries')).filter(Boolean)
       queries.unshift(query)
       if (queries.length === 4) queries.pop()
+      queries = [...new Set(queries)]
     } else {
       queries = [query]
     }
-    this.queryHistory$.next([...new Set(queries)])
-    localStorage.setItem('recentQueries', JSON.stringify([...new Set(queries)]))
+    this.queryHistory$.next(queries)
+    localStorage.setItem('recentQueries', JSON.stringify(queries))
   }
 
   getQueryHistory() {

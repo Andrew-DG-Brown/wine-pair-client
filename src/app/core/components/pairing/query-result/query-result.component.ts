@@ -3,6 +3,7 @@ import { ComplexResponse, ErrorRes, SimpleResponse } from '../../../interfaces/w
 import { GlobalStateService } from '../../../services/global-state.service';
 import { Observable } from 'rxjs';
 import { AccountDataService } from 'src/app/core/services/account-data.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-query-result',
@@ -10,7 +11,7 @@ import { AccountDataService } from 'src/app/core/services/account-data.service';
   styleUrls: ['./query-result.component.css']
 })
 export class QueryResultComponent implements OnInit {
-  @Input() data: ComplexResponse | SimpleResponse | ErrorRes;
+  @Input() data: ComplexResponse | SimpleResponse | ErrorRes | HttpErrorResponse;
   data$: Observable<any>;
   isLoading$: Observable<boolean>;
 
@@ -28,8 +29,12 @@ export class QueryResultComponent implements OnInit {
     this.globalState.updateLoadingState(false)
   }
 
-  isError(object: any): object is ErrorRes {
+  isError(object: any): object is HttpErrorResponse {
     return 'error' in object;
+  }
+
+  getErrorMessage(errRes: HttpErrorResponse) {
+    return typeof errRes.error === 'string' ? errRes.error : errRes.statusText
   }
 
   liked(pairing, dish) {
