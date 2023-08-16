@@ -26,7 +26,7 @@ export class QueryResultComponent implements OnInit {
   }
 
   updateLoading() { 
-    this.globalState.updateLoadingState(false)
+    this.globalState.updateLoadingState(false);
   }
 
   isError(object: any): object is HttpErrorResponse {
@@ -38,6 +38,6 @@ export class QueryResultComponent implements OnInit {
   }
 
   liked(pairing, dish) {
-    console.log({...pairing, dish})
+    console.log({...pairing, dish});
   }
 }
