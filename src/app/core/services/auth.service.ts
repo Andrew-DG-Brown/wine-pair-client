@@ -25,11 +25,11 @@ export class AuthService {
     return this.http.get(`${this.API_URL}/auth/logout`, { withCredentials: true })
     .pipe(
       map((_) => {
-        this.snackbar.updateSnackbar('success', "Log out successful")
+        this.snackbar.updateSnackbar({ type: 'success', message: "Log out successful"})
         return _
       }),
       catchError((err) => {
-        this.snackbar.updateSnackbar('error', "Couldn't log you out")
+        this.snackbar.updateSnackbar({ type: 'error', message: "Couldn't log you out"})
         return of(err)
       })
     )

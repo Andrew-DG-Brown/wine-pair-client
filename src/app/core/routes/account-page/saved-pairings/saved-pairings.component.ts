@@ -67,7 +67,7 @@ export class SavedPairingsComponent implements OnInit{
     this.savedPairings$ = this.accountData.deletePairing(this.uId, deleteParams).pipe(
       tap((res) => {
         this.updateWineFilterDropdown(res)
-        this.snackbar.updateSnackbar(null, 'Pairing removed')
+        this.snackbar.updateSnackbar({ type: null, message: 'Pairing removed'})
       }),
       map((wines) => wines.reverse()),
       shareReplay()

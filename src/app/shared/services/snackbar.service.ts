@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
-interface SnackbarConfig { type: 'success' | 'error' | 'info', message: string }
+interface SnackbarConfig { type: 'success' | 'error' | 'info' | null, message: string }
 
 @Injectable({
   providedIn: 'root'
@@ -15,10 +15,9 @@ export class SnackbarService {
     return this.currentSnackbar$.asObservable()
   }
 
-  updateSnackbar(type: 'success' | 'error' | 'info' | null, message: string) {
-    const snackbarConfig: SnackbarConfig = { type, message }
-    this.currentSnackbar$.next(snackbarConfig)
-    setTimeout(() => {this.currentSnackbar$.next(null)}, 3000)
+  updateSnackbar(config: SnackbarConfig) {
+    this.currentSnackbar$.next(config)
+    setTimeout(() => this.removeSnackbar(), 3000)
   }
 
   removeSnackbar() {

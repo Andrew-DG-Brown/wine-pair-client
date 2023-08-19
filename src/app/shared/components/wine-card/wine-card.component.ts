@@ -37,11 +37,11 @@ export class WineCardComponent implements OnInit {
       const savedRes = await firstValueFrom(this.accountData.savePairing(Number(uId), { type: this.cardType, dish, ...pairing}).pipe(take(1)))
   
       if ('success' in savedRes) {
-        this.snackbar.updateSnackbar('success', 'Pairing saved')
+        this.snackbar.updateSnackbar({ type:'success', message: 'Pairing saved'})
       } else if (savedRes instanceof HttpErrorResponse) {
-        this.snackbar.updateSnackbar('error', "Sorry, couldn't save pairing")
+        this.snackbar.updateSnackbar({type:'error', message: "Sorry, couldn't save pairing"})
       } else if ('error' in savedRes) {
-        this.snackbar.updateSnackbar('info', 'Pairing already saved')
+        this.snackbar.updateSnackbar({ type:'info', message: 'Pairing already saved'})
       }
     } else {
       this.router.navigate(['/login'])
