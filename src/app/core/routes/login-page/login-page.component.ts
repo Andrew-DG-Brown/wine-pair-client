@@ -61,7 +61,7 @@ export class LoginPageComponent implements OnInit {
         this.form.get('password').setErrors({'required': true});
       } else if ('uId' in submitResponse) {
         this.globalState.updateLoggedIn(true, submitResponse)
-        this.snackbar.updateSnackbar('success', 'You are now logged in!')
+        this.snackbar.updateSnackbar({ type: 'success', message: 'You are now logged in!'})
         this.router.navigate([this.route === 'login' ? '/' : '/register-success'])
       }
     }

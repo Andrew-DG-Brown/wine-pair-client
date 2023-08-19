@@ -46,9 +46,9 @@ export class ProfileComponent implements OnInit{
       this.globalState.updateProfile(updateRes)
   
       if ('error' in updateRes) {
-        this.snackbar.updateSnackbar('error', 'Could not update profile')
+        this.snackbar.updateSnackbar({ type: 'error', message: 'Could not update profile'})
       } else {
-        this.snackbar.updateSnackbar('success', 'Profile updated')
+        this.snackbar.updateSnackbar({ type: 'success', message: 'Profile updated' })
       }
     }
   }
